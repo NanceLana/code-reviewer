@@ -77,6 +77,23 @@
         "    print(factorial(5))   # 120",
         "    print(factorial(0))   # 1"
       ]
+    },
+    {
+      "id": 5,
+      "filename": "divide_example.java",
+      "language": "java",
+      "content": [
+        "public class DivideExample {",
+        "    public static int safeDivide(int a, int b) {",
+        "        return a / b;  ",
+        "    }",
+        "",
+        "    public static void main(String[] args) {",
+        "        System.out.println(safeDivide(10, 0)); ",
+        "    }",
+        "}",
+        ""
+      ]
     }
   ]
 }

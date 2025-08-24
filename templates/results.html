@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Review Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            padding: 20px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            padding: 30px;
+            color: #e0e0e0;
+        }
+        
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.01em;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .result-card {
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-color: #555;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #444;
+        }
+        
+        .result-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+        
+        .result-language {
+            background: #667eea;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        
+        .quality-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        
+        .quality-good {
+            background: #28a745;
+            color: white;
+        }
+        
+        .quality-needs-improvement {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .quality-buggy {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .code-section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .code-section h4 {
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        .code-content {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            color: #e0e0e0;
+        }
+        
+        .review-section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .review-section h4 {
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        .summary {
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #cccccc;
+        }
+        
+        .line-comments {
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+        }
+        
+        .line-comment {
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .line-comment:last-child {
+            border-bottom: none;
+        }
+        
+        .line-number {
+            font-weight: 600;
+            color: #667eea;
+            margin-right: 10px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        .no-results h3 {
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        .timestamp {
+            text-align: center;
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            font-weight: 400;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Code Review Results</h1>
+            <p>AI-powered analysis of your code snippets</p>
+        </div>
+        
+        <div class="content">
+            <a href="/" class="back-btn">Back to Snippets</a>
+            
+            {% if results %}
+                <div class="timestamp">
+                    <strong>Review completed:</strong> {{ results.timestamp }}
+                </div>
+                
+                {% for result in results.results %}
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-title">{{ result.filename }}</div>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <div class="result-language">{{ result.language }}</div>
+                            <div class="quality-badge quality-{{ result.review.quality.lower().replace(' ', '-') }}">
+                                {{ result.review.quality }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-section">
+                        <h4>Code Content</h4>
+                        <div class="code-content">{{ result.code }}</div>
+                    </div>
+                    
+                    <div class="review-section">
+                        <h4>AI Review</h4>
+                        <div class="summary">
+                            <strong>Summary:</strong> {{ result.review.summary }}
+                        </div>
+                        
+                        {% if result.review.line_comments %}
+                            <div class="line-comments">
+                                <strong>Line-specific comments:</strong>
+                                {% for line, comment in result.review.line_comments.items() %}
+                                <div class="line-comment">
+                                    <span class="line-number">Line {{ line }}:</span>
+                                    {{ comment }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="line-comments">
+                                <em>No line-specific issues found.</em>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                
+            {% else %}
+                <div class="no-results">
+                    <h3>No review results found</h3>
+                    <p>Run a code review first to see results here.</p>
+                    <br>
+                    <a href="/" class="back-btn">Go to Snippets</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

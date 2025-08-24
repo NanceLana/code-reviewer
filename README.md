@@ -1,10 +1,8 @@
 **LLM-Assisted Code Quality Assessment Tool**
 
-This Python application analyzes code snippets using an LLM API (OpenAI) to provide automated code review comments and quality ratings. 
+This full-stack Python application analyzes code snippets using an LLM API (OpenAI) to provide automated code review comments and quality ratings. 
 
-After you complete steps 1 and 2, add your input code snippets to the `snippets.json` in the format that's in step 3. Once that's set, check out step 4 on how to run the application. 
-
-Please find the following below:
+Please find the steps to run this app below:
 1. Prerequisites
 2. Installation 
 3. Input File Format
@@ -62,11 +60,13 @@ The tool accepts JSON files with the following structure:
 
 **USAGE**
 
-1. Prepare your code snippets in the `snippets.json` file (or create your own)
 
-2. Run the assessment tool:
+
+1. Run the assessment tool:
    
    python main.py
+
+2. Input the required fields like name of the file, language and the code snippet.
 
 
 **TROUBLESHOOTING** 
