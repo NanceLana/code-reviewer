@@ -21,6 +21,7 @@ Please find the steps to run this app below:
 1. Clone or download this repository using command prompt
 
    git clone <https://github.com/NanceLana/code-reviewer>
+   
    cd code-reviewer
 
 2. Install required dependencies
