@@ -46,7 +46,6 @@ def main():
         snippets_data = json.load(f)
 
     results = []
-    formatted_output = []
 
     for snippet in snippets_data.get("snippets", []):
         # Convert content array to string
@@ -65,22 +64,6 @@ def main():
             "code_symbols": symbol_code,
             "review": review
         })
-        
-        # Create formatted output for text file
-        formatted_output.append(f"=== SNIPPET {snippet['id']}: {snippet['filename']} ===")
-        formatted_output.append(f"Language: {snippet.get('language', 'Unknown')}")
-        formatted_output.append("Original Code:")
-        formatted_output.append(format_code_with_line_numbers(code_content))
-        formatted_output.append("\nSymbol Representation (sent to LLM):")
-        formatted_output.append(symbol_code)
-        formatted_output.append("\nReview:")
-        formatted_output.append(f"Summary: {review.get('summary', 'No summary')}")
-        formatted_output.append(f"Quality: {review.get('quality', 'No quality rating')}")
-        if review.get('line_comments'):
-            formatted_output.append("Line-specific comments:")
-            for line, comment in review['line_comments'].items():
-                formatted_output.append(f"  Line {line}: {comment}")
-        formatted_output.append("\n" + "="*60 + "\n")
 
     # Wrap results with timestamp
     output_data = {
@@ -96,14 +79,7 @@ def main():
     with open("output/review_results.json", "w") as f:
         json.dump(output_data, f, indent=2)
 
-    # Save formatted results to text file
-    with open("output/review_results_formatted.txt", "w") as f:
-        f.write(f"Code Review Results - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write("="*60 + "\n\n")
-        f.write('\n'.join(formatted_output))
-
     print(f"-> Review results saved to output/review_results.json")
-    print(f"-> Formatted review results saved to output/review_results_formatted.txt")
     print(f"-> Processed {len(results)} code snippets")
 
 if __name__ == "__main__":
