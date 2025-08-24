@@ -1,0 +1,10 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Environment variables (contains API keys)
+.env
+
+# Output files (generated results)
+output/
+
