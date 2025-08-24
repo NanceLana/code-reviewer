@@ -9,6 +9,8 @@ Please find the steps to run this app below:
 4. Usage 
 5. Troubleshooting
 
+**Notes for assesment reviewer (Ms. Glaucia)** - The sample input json file is "snippets.json" and the sample output json file is "review_results".json. However, when you run the flask application, the input and output is seen as a pretty webpage. This webpage allows easy additions of the input snippets.
+
 **PREREQUISITES**
 
 - Python 3.7 or higher
@@ -29,45 +31,17 @@ Please find the steps to run this app below:
 
 3. Set up your OpenAI API key
    
-   Create a .env file and add your OpenAI API key over there in the format:
-   OPENAI_API_KEY= 
+   Create a .env file in the Deliverable folder and add your OpenAI API key over there in the format:
 
-
-**INPUT FILE FORMAT**
-
-The tool accepts JSON files with the following structure:
-
-```json
-{
-  "snippets": [
-    {
-      "id": 1,
-      "filename": "example.py",
-      "language": "python",
-      "content": [
-        "def your_function():",
-        "    # Your code here",
-        "    pass"
-      ]
-    }
-  ]
-}
-```
-
-**Note**: The `content` field should be an array of strings, where each string represents a line of code.
-
-
+   OPENAI_API_KEY= xxxx....
 
 **USAGE**
-
-
 
 1. Run the assessment tool:
    
    python main.py
 
-2. Input the required fields like name of the file, language and the code snippet.
-
+2. Input the required fields: name of the file and the code snippet.
 
 **TROUBLESHOOTING** 
 
@@ -79,11 +53,5 @@ The tool accepts JSON files with the following structure:
    - Make sure all dependencies are installed: `pip install -r requirements.txt`
    - Check Python version compatibility (3.7+)
 
-3. API Rate Limits
-   - The tool includes error handling for API failures
-   - Check your OpenAI account for rate limits and usage
 
-4. Invalid Input Format
-   - Ensure your JSON file is properly formatted
-   - Check that each snippet has a `content` field
 

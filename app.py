@@ -32,8 +32,8 @@ def add_snippet():
     try:
         data = request.get_json()
         
-        # Validate required fields
-        if not all(key in data for key in ['filename', 'language', 'content']):
+        # Validate required fields (language is no longer required)
+        if not all(key in data for key in ['filename', 'content']):
             return jsonify({'error': 'Missing required fields'}), 400
         
         # Load existing snippets
@@ -42,11 +42,11 @@ def add_snippet():
         # Generate new ID
         new_id = max([s['id'] for s in snippets_data['snippets']], default=0) + 1
         
-        # Create new snippet
+        # Create new snippet (language will be detected during review)
         new_snippet = {
             'id': new_id,
             'filename': data['filename'],
-            'language': data['language'],
+            'language': 'unknown',  # Will be updated during review
             'content': data['content'].split('\n') if isinstance(data['content'], str) else data['content']
         }
         
@@ -78,14 +78,22 @@ def run_review():
         results = []
         
         for snippet in snippets_data['snippets']:
+            # Review snippet (this will detect and update the language)
             review = review_snippet(snippet)
+            
+            # Update the snippet with detected language
+            snippet['language'] = snippet.get('language', 'unknown')
+            
             results.append({
                 'id': snippet['id'],
                 'filename': snippet['filename'],
-                'language': snippet.get('language', ''),
+                'language': snippet['language'],
                 'code': '\n'.join(snippet['content']),
                 'review': review
             })
+        
+        # Save updated snippets with detected languages
+        save_snippets(snippets_data)
         
         # Save results
         output_data = {
